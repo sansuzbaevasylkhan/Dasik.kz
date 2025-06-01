@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dasik.kz</title>
+  <link rel="icon" href="123.png" type="image/png" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo img {
+      height: 50px;
+    }
+    .cart-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+    }
+    .banner {
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+      background-image: url('banner.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
+      gap: 12px;
+    }
+    .product {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      width: 320px;
+      box-sizing: border-box;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .product img {
+      width: 100%;
+      border-radius: 5px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .product button {
+      margin-top: auto;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .product button:hover {
+      background-color: #218838;
+    }
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 14px;
+      background-color: #444;
+      color: white;
+      margin-top: 20px;
+    }
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    .cart-container {
+      position: fixed;
+      top: 60px;
+      right: 10px;
+      width: 320px;
+      max-height: 400px;
+      overflow-y: auto;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 10px;
+      display: none;
+      z-index: 1000;
+    }
+    .cart-item {
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .cart-item .info {
+      flex: 1;
+      font-size: 14px;
+    }
+    .cart-item .order-btn {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .cart-item .order-btn:hover {
+      background-color: #1ebe57;
+    }
+    @media (max-width: 350px) {
+      .product {
+        width: 90vw;
+      }
+      .cart-container {
+        width: 90vw;
+        right: 5vw;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="logo.png" alt="Asik Store" />
+  </a>
+  <button class="cart-btn" onclick="toggleCart()">🛒</button>
+</header>
+
+<div class="banner">Кез келген заттарыңызды аласыздар!</div>
+
+<div class="products" id="product-list"></div>
+
+<div class="cart-container" id="cart"></div>
+
+<div class="footer">
+  © 2025 Авторлық құқық қорғалған by Dasik.kz
+</div>
+
+<script>
+  // Тауарлар тізімі (10 өнім)
+  const products = [
+    { name: "НОСО НС6 оригинальная колонка HC6 NEW.Новое поступление оригинальных колонок фирмы НОСО. Супер качество.Оригинальный чистый звук", price: 15000, img: "tauar1.png" },
+    { name: "AirPods 2 premium  Лучше качество ", price: 12000, img: "tauar2.png" },
+    { name: "USB silicon Всегда в наличии  ", price: 1000, img: "tauar3.png" },
+    { name: "Галовка USB-C 20w", price: 8000, img: "tauar4.png" },
+    { name: "Телефон", price: 8000, img: "tauar5.png" },
+    { name: "Type-C кабель", price: 1500, img: "https://via.placeholder.com/320x180?text=Type-C+кабель" },
+    { name: "Powerbank 10.000mAh", price: 8000, img: "https://via.placeholder.com/320x180?text=Powerbank" },
+    { name: "Bluetooth колонка", price: 10000, img: "https://via.placeholder.com/320x180?text=Bluetooth+колонка" },
+    { name: "USB флешка 32GB", price: 2500, img: "https://via.placeholder.com/320x180?text=USB+флешка" },
+    { name: "Монитор тазалаушы", price: 1200, img: "https://via.placeholder.com/320x180?text=Монитор+тазалаушы" }
+  ];
+
+  const cart = [];
+
+  // Себетке қосу функциясы
+  function addToCart(name, price, img) {
+    cart.push({ name, price, img });
+    updateCart();
+    document.getElementById("cart").style.display = "block";
+  }
+
+  // Себетті көрсету/жасыру функциясы
+  function toggleCart() {
+    const cartBox = document.getElementById("cart");
+    cartBox.style.display = cartBox.style.display === "block" ? "none" : "block";
+  }
+
+  // Себет ішін жаңарту
+  function updateCart() {
+    const cartBox = document.getElementById("cart");
+    if (cart.length === 0) {
+      cartBox.innerHTML = "<h3>Себет бос</h3>";
+      return;
+    }
+    cartBox.innerHTML = "<h3>Себет</h3>";
+    cart.forEach((item, index) => {
+      cartBox.innerHTML += `
+        <div class="cart-item">
+          <img src="${item.img}" alt="${item.name}" />
+          <div class="info">
+            <strong>${item.name}</strong><br>
+            ${item.price.toLocaleString('kk-KZ')} ₸
+          </div>
+          <button class="order-btn" onclick="orderWhatsApp(${index})">Тапсырыс беру</button>
+        </div>
+      `;
+    });
+  }
+
+  // WhatsApp арқылы тапсырыс жіберу
+  function orderWhatsApp(index) {
+    const item = cart[index];
+    const message = `Сәлеметсіз бе! Мен келесі затқа тапсырыс бергім келеді:%0A🛍 ${item.name}%0A💵 ${item.price.toLocaleString('kk-KZ')} ₸%0A🖼 Сурет: ${item.img}`;
+    const phoneNumber = "7759718378";
+    const url = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(url, '_blank');
+  }
+
+  // Тауарларды бетке шығару
+  function loadProducts() {
+    const productList = document.getElementById("product-list");
+    products.forEach(product => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" />
+        <div>${product.name}</div>
+        <div>${product.price.toLocaleString('kk-KZ')} ₸</div>
+        <button onclick="addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.img}')">Заказ беру</button>
+      `;
+      productList.appendChild(div);
+    });
+  }
+
+  loadProducts();
+</script>
+
+</body>
+</html>
