@@ -18,9 +18,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
     .logo img {
       height: 50px;
@@ -30,19 +27,7 @@
       border: none;
       cursor: pointer;
       color: white;
-      font-size: 28px;
-      position: relative;
-    }
-    .cart-count {
-      position: absolute;
-      top: -6px;
-      right: -10px;
-      background: red;
-      color: white;
-      font-size: 14px;
-      border-radius: 50%;
-      padding: 2px 6px;
-      font-weight: bold;
+      font-size: 24px;
     }
     .banner {
       height: 180px;
@@ -57,8 +42,6 @@
       background-image: url('banner.png');
       background-size: cover;
       background-position: center;
-      position: relative;
-      flex-direction: column;
     }
     .products {
       display: flex;
@@ -66,7 +49,6 @@
       justify-content: center;
       padding: 10px;
       gap: 12px;
-      min-height: 400px;
     }
     .product {
       background: white;
@@ -79,10 +61,6 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      transition: box-shadow 0.3s ease;
-    }
-    .product:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .product img {
       width: 100%;
@@ -121,7 +99,7 @@
     }
     .cart-container {
       position: fixed;
-      top: 70px;
+      top: 60px;
       right: 10px;
       width: 320px;
       max-height: 400px;
@@ -133,12 +111,6 @@
       padding: 10px;
       display: none;
       z-index: 1000;
-    }
-    .cart-container h3 {
-      margin-top: 0;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 8px;
     }
     .cart-item {
       border-bottom: 1px solid #eee;
@@ -156,7 +128,6 @@
     .cart-item .info {
       flex: 1;
       font-size: 14px;
-      word-break: break-word;
     }
     .cart-item .order-btn {
       background-color: #25D366;
@@ -167,7 +138,6 @@
       font-size: 12px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      white-space: nowrap;
     }
     .cart-item .order-btn:hover {
       background-color: #1ebe57;
@@ -186,139 +156,139 @@
 <body>
 
 <header>
-  <a href="index.html" class="logo" aria-label="Asik Store басты бетке оралу">
-    <img src="logo.png" alt="Asik Store логотипі" />
+  <a href="index.html" class="logo">
+    <img src="logo.png" alt="Asik Store" />
   </a>
-  <button class="cart-btn" aria-label="Себетті көрсету" onclick="toggleCart()">
-    🛒 <span id="cartCount" class="cart-count" style="display:none">0</span>
-  </button>
+  <button class="cart-btn" onclick="toggleCart()">🛒</button>
 </header>
 
-<div class="banner" role="banner">
-  Dasik.kz
+<div class="banner"></div>
+
+<div class="products" id="product-list"></div>
+
+<div class="cart-container" id="cart"></div>
+
+<div class="footer">
+  © 2025 Авторлық құқық қорғалған by Dasik.kz
 </div>
 
-<main>
-  <div class="products" id="product-list" aria-live="polite" aria-atomic="true"></div>
-</main>
-
-<aside class="cart-container" id="cart" aria-label="Себет">
-  <!-- Себет ішіндегі элементтер осы жерге шығады -->
-</aside>
-
-<footer class="footer">
-  © 2025 Авторлық құқық қорғалған by Dasik.kz
-</footer>
-
 <script>
-  const products = [
-    { name: "НОСО НС6 оригинальная колонка HC6 NEW.Новое поступление оригинальных колонок фирмы НОСО. Супер качество.Оригинальный чистый звук", price: 15000, img: "tauar1.png" },
-    { name: "AirPods 2 premium Лучше качество", price: 12000, img: "tauar2.png" },
-    { name: "USB silicon Всегда в наличии", price: 1000, img: "tauar3.png" },
-    { name: "Галовка USB-C 20w", price: 8000, img: "tauar4.png" },
-    { name: "Телефон", price: 8000, img: "tauar5.png" },
-    { name: "Borofone BH93 . Удлиненная серия кронштейнов с одной кнопкой, более экономичный 2. Конструкция работа с одной рукой, легко зажимается", price: 1500, img: "tauar6.png" },
-    { name: "зарядка hoco", price: 7000, img: "tauar7.png" },
-    { name: "USB флешка 16 GB", price: 3000, img: "tauar8.png" },
-    { name: "USB флешка 32 GB", price: 3000, img: "tauar9.png" },
-    { name: "USB флешка 64 GB", price: 5000, img: "tauar10.png" },
-    { name: "Наушники Bluetooth", price: 4500, img: "tauar11.png" },
-    { name: "Портативная колонка JBL", price: 12000, img: "tauar12.png" },
-    { name: "Кабель USB-C", price: 1200, img: "tauar13.png" },
-    { name: "Смарт-часы", price: 25000, img: "tauar14.png" },
-    { name: "Внешний аккумулятор 10000mAh", price: 8000, img: "tauar15.png" },
-    { name: "Клавиатура беспроводная", price: 7000, img: "tauar16.png" },
-    { name: "Мышь беспроводная", price: 3500, img: "tauar17.png" },
-    { name: "Защитное стекло для телефона", price: 1500, img: "tauar18.png" },
-    { name: "Чехол для iPhone", price: 2500, img: "tauar19.png" },
-    { name: "HDMI кабель", price: 2000, img: "tauar20.png" },
-    { name: "Флешка OTG", price: 4000, img: "tauar21.png" },
-    { name: "Адаптер для наушников", price: 1500, img: "tauar22.png" },
-    { name: "Портативный динамик", price: 10000, img: "tauar23.png" },
-    { name: "Автомобильное зарядное устройство", price: 3500, img: "tauar24.png" },
-    { name: "Умный браслет", price: 15000, img: "tauar25.png" }
-  ];
+const products = [
+  { name: "НОСО НС6 оригинальная колонка HC6 NEW.Новое поступление оригинальных колонок фирмы НОСО. Супер качество.Оригинальный чистый звук", price: 15000, img: "tauar1.png" },
+  { name: "AirPods 2 premium Лучше качество", price: 12000, img: "tauar2.png" },
+  { name: "USB silicon Всегда в наличии", price: 1000, img: "tauar3.png" },
+  { name: "Галовка USB-C 20w", price: 8000, img: "tauar4.png" },
+  { name: "Телефон", price: 8000, img: "tauar5.png" },
+  { name: "Borofone BH93 . Удлиненная серия кронштейнов с одной кнопкой, более экономичный 2. Конструкция работа с одной рукой, легко зажимается", price: 1500, img: "tauar6.png" },
+  { name: "зарядка hoco", price: 7000, img: "tauar7.png" },
+  { name: "USB флешка 16 GB", price: 3000, img: "tauar8.png" },
+  { name: "USB флешка 32 GB", price: 3000, img: "tauar9.png" },
+  { name: "USB флешка 64 GB", price: 5000, img: "tauar10.png" },
+  { name: "Наушники Bluetooth", price: 4500, img: "tauar11.png" },
+  { name: "Портативная колонка JBL", price: 12000, img: "tauar12.png" },
+  { name: "Кабель USB-C", price: 1200, img: "tauar13.png" },
+  { name: "Смарт-часы", price: 25000, img: "tauar14.png" },
+  { name: "Внешний аккумулятор 10000mAh", price: 8000, img: "tauar15.png" },
+  { name: "Клавиатура беспроводная", price: 7000, img: "tauar16.png" },
+  { name: "Мышь беспроводная", price: 3500, img: "tauar17.png" },
+  { name: "Защитное стекло для телефона", price: 1500, img: "tauar18.png" },
+  { name: "Чехол для iPhone", price: 2500, img: "tauar19.png" },
+  { name: "HDMI кабель", price: 2000, img: "tauar20.png" },
+  { name: "Флешка USB 3.0 128GB", price: 9000, img: "tauar21.png" },
+  { name: "Карта памяти microSD 64GB", price: 6000, img: "tauar22.png" },
+  { name: "Сетевой адаптер 65W", price: 9500, img: "tauar23.png" },
+  { name: "Кабель Lightning", price: 1700, img: "tauar24.png" },
+  { name: "Портативный SSD 500GB", price: 45000, img: "tauar25.png" },
+  { name: "Беспроводная зарядка", price: 5500, img: "tauar26.png" },
+  { name: "Экшн-камера", price: 28000, img: "tauar27.png" },
+  { name: "Монитор 24 дюйма", price: 55000, img: "tauar28.png" },
+  { name: "Игровая гарнитура", price: 12000, img: "tauar29.png" },
+  { name: "USB-хаб 4 порта", price: 2500, img: "tauar30.png" },
+];
+
 
   const cart = [];
 
-  function renderProducts() {
+  function addToCart(name, price, img) {
+    cart.push({ name, price, img });
+    updateCart();
+    document.getElementById("cart").style.display = "block";
+  }
+
+  function toggleCart() {
+    const cartBox = document.getElementById("cart");
+    cartBox.style.display = cartBox.style.display === "block" ? "none" : "block";
+  }
+
+  function updateCart() {
+    const cartBox = document.getElementById("cart");
+    if (cart.length === 0) {
+      cartBox.innerHTML = "<h3>Себет бос</h3>";
+      return;
+    }
+    cartBox.innerHTML = "<h3>Себет</h3>";
+    cart.forEach((item, index) => {
+      cartBox.innerHTML += `
+        <div class="cart-item">
+          <img src="${item.img}" alt="${item.name}" />
+          <div class="info">
+            <strong>${item.name}</strong><br>
+            ${item.price.toLocaleString('kk-KZ')} ₸
+          </div>
+          <button class="order-btn" onclick="orderWhatsApp(${index})">Тапсырыс беру</button>
+        </div>
+      `;
+    });
+  }
+
+  function orderWhatsApp(index) {
+    const item = cart[index];function updateCart() {
+  const cartBox = document.getElementById("cart");
+  if (cart.length === 0) {
+    cartBox.innerHTML = "<h3>Себет бос</h3>";
+    return;
+  }
+  cartBox.innerHTML = "<h3>Себет</h3>";
+  cart.forEach((item, index) => {
+    cartBox.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.img}" alt="${item.name}" />
+        <div class="info">
+          <strong>${item.name}</strong><br>
+          ${item.price.toLocaleString('kk-KZ')} ₸
+        </div>
+        <button class="order-btn" onclick="orderWhatsApp(${index})">Тапсырыс беру</button>
+      </div>
+    `;
+  });
+
+  // 👇 Жалпы баға қосу
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  cartBox.innerHTML += `<hr><strong>Жалпы баға: ${total.toLocaleString('kk-KZ')} ₸</strong>`;
+}
+
+    const message = `Сәлеметсіз бе! Мен келесі затқа тапсырыс бергім келеді:%0A🛍 ${item.name}%0A💵 ${item.price.toLocaleString('kk-KZ')} ₸%0A🖼 Сурет: ${item.img}`;
+    const phoneNumber = "7759718378";
+    const url = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(url, '_blank');
+  }
+
+  function loadProducts() {
     const productList = document.getElementById("product-list");
-    productList.innerHTML = "";
-    products.forEach((product, index) => {
+    products.forEach(product => {
       const div = document.createElement("div");
       div.className = "product";
-      div.setAttribute("tabindex", "0");
       div.innerHTML = `
         <img src="${product.img}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p><b>${product.price.toLocaleString()} ₸</b></p>
-        <button onclick="addToCart(${index})" aria-label="${product.name} себетке қосу">Себетке қосу</button>
+        <div>${product.name}</div>
+        <div>${product.price.toLocaleString('kk-KZ')} ₸</div>
+        <button onclick="addToCart('${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.img}')">Заказ беру</button>
       `;
       productList.appendChild(div);
     });
   }
 
-  function addToCart(index) {
-    const product = products[index];
-    // Егер себетте болса, қосымша есептемей қосамыз
-    if (!cart.includes(product)) {
-      cart.push(product);
-      updateCartCount();
-      alert(`«${product.name}» себетке қосылды.`);
-    } else {
-      alert(`«${product.name}» себетте бар.`);
-    }
-  }
-
-  function updateCartCount() {
-    const cartCount = document.getElementById("cartCount");
-    if (cart.length > 0) {
-      cartCount.style.display = "inline";
-      cartCount.textContent = cart.length;
-    } else {
-      cartCount.style.display = "none";
-    }
-  }
-
-  function toggleCart() {
-    const cartDiv = document.getElementById("cart");
-    if (cartDiv.style.display === "block") {
-      cartDiv.style.display = "none";
-    } else {
-      renderCart();
-      cartDiv.style.display = "block";
-    }
-  }
-
-  function renderCart() {
-    const cartDiv = document.getElementById("cart");
-    cartDiv.innerHTML = "<h3>Себет</h3>";
-    if (cart.length === 0) {
-      cartDiv.innerHTML += "<p>Себет бос</p>";
-      return;
-    }
-    cart.forEach((item, i) => {
-      const itemDiv = document.createElement("div");
-      itemDiv.className = "cart-item";
-      itemDiv.innerHTML = `
-        <img src="${item.img}" alt="${item.name}" />
-        <div class="info">${item.name} — <b>${item.price.toLocaleString()} ₸</b></div>
-        <button class="order-btn" onclick="orderProduct(${i})" aria-label="${item.name} тапсырыс беру">Тапсырыс беру</button>
-      `;
-      cartDiv.appendChild(itemDiv);
-    });
-  }
-
-  function orderProduct(i) {
-    const product = cart[i];
-    const text = encodeURIComponent(`Сәлеметсіз бе! Мен «${product.name}» өнімін сатып алғым келеді.`);
-    const url = `https://wa.me/77001234567?text=${text}`;  // Сіздің WhatsApp нөміріңізді қойыңыз
-    window.open(url, "_blank");
-  }
-
-  // Алғашқы рендер
-  renderProducts();
-  updateCartCount();
+  loadProducts();
 </script>
 
 </body>
